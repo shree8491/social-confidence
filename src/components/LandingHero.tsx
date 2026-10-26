@@ -1,21 +1,7 @@
 'use client';
 
 import React from 'react';
-import { 
-  ShieldCheck, 
-  Clock, 
-  MapPin, 
-  IndianRupee, 
-  Car, 
-  Target, 
-  Flame, 
-  ArrowRight, 
-  Users, 
-  BrainCircuit, 
-  Sparkles,
-  ChevronRight,
-  Award
-} from 'lucide-react';
+import { ArrowRight, ChevronRight, Check } from 'lucide-react';
 import { PROGRAM_COMMERCIALS, PERSONA_PROFILES } from '@/lib/constants';
 import { PersonaType, SessionData } from '@/types';
 
@@ -31,243 +17,143 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
   onStartSession,
 }) => {
   return (
-    <div className="space-y-12 pb-16">
-      {/* PRD Header & Metadata Banner */}
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-indigo-950/60 via-gray-900/40 to-transparent border border-indigo-500/20 p-6 sm:p-10">
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-indigo-500/10 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-80 h-80 rounded-full bg-amber-500/10 blur-3xl pointer-events-none" />
+    <div className="space-y-16 pb-20 max-w-5xl mx-auto">
+      {/* Hero Section */}
+      <section className="pt-6 sm:pt-10 space-y-6">
+        <div className="flex items-center space-x-2 text-xs font-mono text-neutral-400">
+          <span>PRD v{PROGRAM_COMMERCIALS.version}</span>
+          <span>·</span>
+          <span>Owner: {PROGRAM_COMMERCIALS.owner}</span>
+          <span>·</span>
+          <span>Target: {PROGRAM_COMMERCIALS.launchWindow}</span>
+        </div>
 
-        <div className="relative z-10">
-          <div className="flex flex-wrap items-center gap-2 mb-4 text-xs font-semibold">
-            <span className="px-3 py-1 rounded-full bg-indigo-600/20 text-indigo-300 border border-indigo-500/30">
-              PRD Specification v{PROGRAM_COMMERCIALS.version}
-            </span>
-            <span className="px-3 py-1 rounded-full bg-amber-500/10 text-amber-300 border border-amber-500/20">
-              Target Launch: {PROGRAM_COMMERCIALS.launchWindow}
-            </span>
-            <span className="px-3 py-1 rounded-full bg-gray-800 text-gray-300 border border-gray-700">
-              Program Owner: {PROGRAM_COMMERCIALS.owner}
-            </span>
-            <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              Status: Draft / Review
-            </span>
-          </div>
-
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white mb-6">
-            Real-World Social Confidence &amp;{' '}
-            <span className="bg-gradient-to-r from-indigo-400 via-sky-300 to-amber-300 bg-clip-text text-transparent">
-              Cold Outreach
-            </span>
+        <div className="space-y-4">
+          <h1 className="text-4xl sm:text-6xl font-medium tracking-tight text-white leading-tight">
+            Real-World Social Confidence <br className="hidden sm:block" />
+            <span className="text-neutral-400">&amp; Cold Outreach</span>
           </h1>
 
-          <div className="max-w-3xl space-y-4 text-gray-300 text-sm sm:text-base leading-relaxed mb-8">
-            <p className="font-medium text-gray-200">
-              An immersive, field-based coaching program and digital framework designed to transform
-              introverted, socially anxious individuals into confident communicators.
-            </p>
-            <p className="text-gray-400">
-              By pairing real-world cold outreach challenges in public spaces with structured feedback
-              loops, participants build genuine comfort in spontaneous interactions, overcome approach
-              anxiety, and master high-value communication skills.
-            </p>
-          </div>
-
-          {/* Quick CTA */}
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
-            <button
-              onClick={onStartSession}
-              className="inline-flex items-center justify-center space-x-2 px-6 py-3.5 rounded-xl bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-500 hover:to-indigo-600 text-white font-semibold text-sm shadow-lg shadow-indigo-600/30 transition-all hover:scale-[1.02]"
-            >
-              <span>Launch Active 5-Hour Field Session</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-            <div className="flex items-center space-x-2 text-xs text-gray-400 px-3 py-2 bg-gray-900/60 rounded-xl border border-gray-800">
-              <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
-              <span>Includes 5-min Mindset Priming, Progressive Tiers, and Live Debrief Loop</span>
-            </div>
-          </div>
+          <p className="max-w-2xl text-sm sm:text-base text-neutral-400 leading-relaxed font-normal">
+            An immersive, field-based coaching program and digital companion framework. Participants build genuine comfort in spontaneous interactions, dissolve approach anxiety, and master high-value communication skills across Chennai&apos;s public spaces.
+          </p>
         </div>
-      </div>
 
-      {/* Program Commercials & Operational Logistics (PRD Section 2) */}
-      <section className="space-y-4">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-              2. Program Commercials &amp; Operational Logistics
-            </h2>
-            <p className="text-xs sm:text-sm text-gray-400">
-              Full-service field engagement terms and execution parameters
-            </p>
-          </div>
-          <span className="text-xs uppercase font-mono tracking-wider text-indigo-400 bg-indigo-950/60 px-2.5 py-1 rounded-md border border-indigo-800">
-            Chennai Standard
+        <div className="pt-2 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+          <button
+            onClick={onStartSession}
+            className="inline-flex items-center space-x-2 px-5 py-2.5 rounded-full bg-white text-black hover:bg-neutral-200 transition-colors text-xs font-semibold"
+          >
+            <span>Start Active Field Session</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+          <span className="text-xs text-neutral-500 font-mono">
+            5 Hours · Chennai Hubs · ₹6,999 Intensive
           </span>
         </div>
+      </section>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {/* Pricing Card */}
-          <div className="p-5 rounded-2xl bg-gray-900/80 border border-gray-800 hover:border-amber-500/40 transition-colors relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500/10 rounded-full blur-xl group-hover:bg-amber-500/20 transition-all pointer-events-none" />
-            <div className="flex items-center space-x-3 mb-3">
-              <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/20">
-                <IndianRupee className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Session Pricing
-              </span>
-            </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-white mb-1">
-              {PROGRAM_COMMERCIALS.sessionPrice}
-            </div>
-            <p className="text-xs text-gray-400">
-              Standard rate for a complete intensive field module engagement.
-            </p>
+      {/* Program Commercials & Operational Logistics (PRD Section 2) */}
+      <section className="space-y-4 pt-4 border-t border-neutral-900">
+        <div className="flex items-baseline justify-between">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-neutral-400">
+            2. Program Commercials &amp; Operational Logistics
+          </h2>
+          <span className="text-[11px] font-mono text-neutral-500">Standard Module</span>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-900">
+          <div className="bg-black p-5 space-y-1">
+            <span className="text-[10px] uppercase font-mono text-neutral-500 block">Session Pricing</span>
+            <div className="text-2xl font-medium text-white">{PROGRAM_COMMERCIALS.sessionPrice}</div>
+            <p className="text-xs text-neutral-400">Complete intensive field module.</p>
           </div>
 
-          {/* Duration Card */}
-          <div className="p-5 rounded-2xl bg-gray-900/80 border border-gray-800 hover:border-indigo-500/40 transition-colors relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl group-hover:bg-indigo-500/20 transition-all pointer-events-none" />
-            <div className="flex items-center space-x-3 mb-3">
-              <div className="w-10 h-10 rounded-xl bg-indigo-500/10 text-indigo-400 flex items-center justify-center border border-indigo-500/20">
-                <Clock className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Duration
-              </span>
-            </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-white mb-1">
-              5 Hours
-            </div>
-            <p className="text-xs text-gray-400">
-              Includes initial priming, live field execution, and post-approach debriefs.
-            </p>
+          <div className="bg-black p-5 space-y-1">
+            <span className="text-[10px] uppercase font-mono text-neutral-500 block">Duration</span>
+            <div className="text-2xl font-medium text-white">5 Hours</div>
+            <p className="text-xs text-neutral-400">Priming, execution, and live debriefs.</p>
           </div>
 
-          {/* Primary Location Card */}
-          <div className="p-5 rounded-2xl bg-gray-900/80 border border-gray-800 hover:border-sky-500/40 transition-colors relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-sky-500/10 rounded-full blur-xl group-hover:bg-sky-500/20 transition-all pointer-events-none" />
-            <div className="flex items-center space-x-3 mb-3">
-              <div className="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-400 flex items-center justify-center border border-sky-500/20">
-                <MapPin className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Primary Location
-              </span>
-            </div>
-            <div className="text-xl sm:text-2xl font-bold text-white mb-1">
-              Chennai
-            </div>
-            <p className="text-xs text-gray-400">
-              Conducted across high-footfall public hubs (Malls, Promenades &amp; Parks).
-            </p>
+          <div className="bg-black p-5 space-y-1">
+            <span className="text-[10px] uppercase font-mono text-neutral-500 block">Primary Location</span>
+            <div className="text-2xl font-medium text-white">Chennai</div>
+            <p className="text-xs text-neutral-400">Conducted across high-footfall public hubs.</p>
           </div>
 
-          {/* Transit Policy Card */}
-          <div className="p-5 rounded-2xl bg-gray-900/80 border border-gray-800 hover:border-emerald-500/40 transition-colors relative overflow-hidden group">
-            <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl group-hover:bg-emerald-500/20 transition-all pointer-events-none" />
-            <div className="flex items-center space-x-3 mb-3">
-              <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
-                <Car className="w-5 h-5" />
-              </div>
-              <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">
-                Transit Policy
-              </span>
-            </div>
-            <div className="text-lg font-bold text-emerald-300 mb-1">
-              Client-Borne
-            </div>
-            <p className="text-xs text-gray-400">
-              Additional travel &amp; transit expenses covered by client outside Chennai limits.
-            </p>
+          <div className="bg-black p-5 space-y-1">
+            <span className="text-[10px] uppercase font-mono text-neutral-500 block">Transit Policy</span>
+            <div className="text-xl font-medium text-white">Client-Borne</div>
+            <p className="text-xs text-neutral-400">Travel covered outside Chennai limits.</p>
           </div>
         </div>
 
-        {/* Chennai Field Hotspots Showcase */}
-        <div className="bg-gray-900/50 rounded-2xl p-5 border border-gray-800/80">
-          <div className="flex items-center space-x-2 mb-3 text-xs font-semibold text-gray-300">
-            <MapPin className="w-4 h-4 text-indigo-400" />
-            <span>Target Chennai Public Field Hubs:</span>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {PROGRAM_COMMERCIALS.hotspots.map((hub) => (
-              <div
-                key={hub.name}
-                className="flex items-start justify-between p-3 rounded-xl bg-gray-800/60 border border-gray-700/50"
-              >
-                <div>
-                  <div className="text-xs font-bold text-gray-100">{hub.name}</div>
-                  <div className="text-[11px] text-gray-400">{hub.vibe}</div>
-                </div>
-                <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 font-mono">
-                  {hub.footfall} Footfall
-                </span>
-              </div>
-            ))}
-          </div>
+        {/* Chennai Hubs list */}
+        <div className="flex flex-wrap items-center gap-2 pt-2">
+          <span className="text-xs font-mono text-neutral-500">Active Field Hubs:</span>
+          {PROGRAM_COMMERCIALS.hotspots.map((hub) => (
+            <span
+              key={hub.name}
+              className="px-2.5 py-1 rounded-md text-xs text-neutral-300 bg-neutral-950 border border-neutral-800"
+            >
+              {hub.name.split(' (')[0]}
+            </span>
+          ))}
         </div>
       </section>
 
       {/* Target Audience & Persona Profiles (PRD Section 3) */}
-      <section className="space-y-4">
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
+      <section className="space-y-4 pt-4 border-t border-neutral-900">
+        <div className="flex items-baseline justify-between">
+          <h2 className="text-xs font-mono uppercase tracking-wider text-neutral-400">
             3. Target Audience &amp; Persona Profiles
           </h2>
-          <p className="text-xs sm:text-sm text-gray-400">
-            Select your primary persona profile to calibrate session drills and target challenge roadmap
-          </p>
+          <span className="text-[11px] font-mono text-neutral-500">Select Profile</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           {PERSONA_PROFILES.map((profile) => {
             const isSelected = session.persona === profile.id;
             return (
               <div
                 key={profile.id}
                 onClick={() => onSelectPersona(profile.id)}
-                className={`cursor-pointer rounded-2xl p-6 border transition-all relative flex flex-col justify-between ${
+                className={`cursor-pointer p-5 rounded-2xl border transition-all flex flex-col justify-between ${
                   isSelected
-                    ? 'bg-indigo-950/40 border-indigo-500 shadow-xl shadow-indigo-500/10 ring-1 ring-indigo-500'
-                    : 'bg-gray-900/70 border-gray-800 hover:border-gray-700 hover:bg-gray-900'
+                    ? 'bg-neutral-900/60 border-neutral-400'
+                    : 'bg-black border-neutral-800/80 hover:border-neutral-700'
                 }`}
               >
-                {isSelected && (
-                  <span className="absolute top-4 right-4 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-indigo-500 text-white">
-                    Active Persona
-                  </span>
-                )}
                 <div>
-                  <div className="w-12 h-12 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 flex items-center justify-center mb-4">
-                    {profile.id === 'introvert' && <BrainCircuit className="w-6 h-6" />}
-                    {profile.id === 'career_professional' && <Target className="w-6 h-6" />}
-                    {profile.id === 'socially_anxious' && <ShieldCheck className="w-6 h-6" />}
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-xs font-mono uppercase text-neutral-400">
+                      Persona
+                    </span>
+                    {isSelected && (
+                      <span className="text-[10px] font-mono text-white flex items-center space-x-1">
+                        <Check className="w-3 h-3" />
+                        <span>Active</span>
+                      </span>
+                    )}
                   </div>
 
-                  <h3 className="text-base sm:text-lg font-bold text-white mb-1">
+                  <h3 className="text-sm font-medium text-white mb-1">
                     {profile.title}
                   </h3>
-                  <p className="text-xs text-indigo-300 font-medium mb-4">
+                  <p className="text-xs text-neutral-400 mb-4 font-normal">
                     {profile.tagline}
                   </p>
 
-                  <div className="space-y-3 text-xs mb-6">
+                  <div className="space-y-2.5 text-xs text-neutral-400 pt-3 border-t border-neutral-900">
                     <div>
-                      <span className="text-gray-400 font-semibold block mb-0.5">Primary Needs:</span>
-                      <p className="text-gray-200">{profile.primaryNeeds}</p>
+                      <span className="text-neutral-500 font-mono text-[10px] uppercase block">Need</span>
+                      <p className="text-neutral-300">{profile.primaryNeeds}</p>
                     </div>
                     <div>
-                      <span className="text-rose-400 font-semibold block mb-0.5">Key Pain Points:</span>
-                      <p className="text-gray-300">{profile.keyPainPoints}</p>
+                      <span className="text-neutral-500 font-mono text-[10px] uppercase block">Pain Point</span>
+                      <p className="text-neutral-400">{profile.keyPainPoints}</p>
                     </div>
                   </div>
-                </div>
-
-                <div className="pt-4 border-t border-gray-800/80 flex items-center justify-between text-xs font-semibold">
-                  <span className="text-indigo-400">
-                    {isSelected ? '✓ Selected Profile' : 'Click to Select'}
-                  </span>
-                  <ChevronRight className="w-4 h-4 text-gray-500" />
                 </div>
               </div>
             );
@@ -276,84 +162,57 @@ export const LandingHero: React.FC<LandingHeroProps> = ({
       </section>
 
       {/* Core Problem Statement & Solutions (PRD Section 4) */}
-      <section className="rounded-3xl bg-gray-900/80 border border-gray-800 p-6 sm:p-8 space-y-6">
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            4. Core Problem Statement &amp; Solutions
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-400">
-            Why intellectual understanding fails without real-world sensory exposure
-          </p>
-        </div>
+      <section className="space-y-4 pt-4 border-t border-neutral-900">
+        <h2 className="text-xs font-mono uppercase tracking-wider text-neutral-400">
+          4. Core Problem Statement &amp; Solutions
+        </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="p-5 rounded-2xl bg-rose-950/20 border border-rose-900/40 space-y-2">
-            <div className="flex items-center space-x-2 text-rose-400 font-bold text-sm">
-              <Flame className="w-4 h-4" />
-              <span>The Challenge</span>
-            </div>
-            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-              Social anxiety, fear of cold outreach, and overthinking prevent people from making
-              meaningful public connections. <strong className="text-rose-200">Theory alone cannot cure approach anxiety.</strong> Reading books or watching tutorials leaves the autonomic nervous system completely unprepared for real human proximity.
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="p-5 rounded-2xl bg-black border border-neutral-900 space-y-2">
+            <span className="text-xs font-mono uppercase text-neutral-500 block">The Challenge</span>
+            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              Social anxiety, fear of cold outreach, and overthinking prevent people from making meaningful public connections. <strong className="text-white font-medium">Theory alone cannot cure approach anxiety.</strong> Reading books leaves the autonomic nervous system completely unprepared for real-world spontaneous human interactions.
             </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-indigo-950/30 border border-indigo-900/40 space-y-2">
-            <div className="flex items-center space-x-2 text-indigo-400 font-bold text-sm">
-              <ShieldCheck className="w-4 h-4" />
-              <span>The Solution</span>
-            </div>
-            <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">
-              Structured, real-world field exposure combined with actionable frameworks for mindset, body
-              language, and immediate feedback. Guided progressive escalation in Chennai public environments desensitizes the freeze response permanently.
+          <div className="p-5 rounded-2xl bg-black border border-neutral-900 space-y-2">
+            <span className="text-xs font-mono uppercase text-neutral-500 block">The Solution</span>
+            <p className="text-xs sm:text-sm text-neutral-300 leading-relaxed">
+              Structured, real-world field exposure combined with actionable frameworks for mindset, body language, and immediate feedback. Guided progressive escalation in Chennai public environments desensitizes the freeze response systematically.
             </p>
           </div>
         </div>
       </section>
 
-      {/* 3-Phase Execution Roadmap Overview */}
-      <section className="space-y-4">
-        <div>
-          <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-            5. Key Functional &amp; Core Deliverables (3 Phases)
-          </h2>
-          <p className="text-xs sm:text-sm text-gray-400">
-            A battle-tested 3-stage protocol designed for immediate neuro-associative rewiring
-          </p>
-        </div>
+      {/* 3-Phase Deliverables (PRD Section 5) */}
+      <section className="space-y-4 pt-4 border-t border-neutral-900">
+        <h2 className="text-xs font-mono uppercase tracking-wider text-neutral-400">
+          5. Key Functional &amp; Core Deliverables
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-5 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-3">
-            <div className="text-xs font-mono font-bold text-indigo-400 uppercase tracking-wider">
-              Phase 1 · Preparation
-            </div>
-            <h3 className="font-bold text-white text-base">Pre-Session Mindset &amp; Foundations</h3>
-            <ul className="text-xs text-gray-400 space-y-2 list-disc list-inside">
-              <li><strong className="text-gray-200">Self-Assessment Check:</strong> Initial mapping of anxiety triggers, past comfort zones, and specific goals.</li>
-              <li><strong className="text-gray-200">Low-Stakes Priming Routine:</strong> Quick 5-minute warm-up drills before moving to deeper conversations.</li>
-            </ul>
+          <div className="p-5 rounded-2xl bg-black border border-neutral-900 space-y-2">
+            <span className="text-[10px] font-mono uppercase text-neutral-500 block">Phase 1 · Preparation</span>
+            <h3 className="text-sm font-medium text-white">Pre-Session Mindset</h3>
+            <p className="text-xs text-neutral-400 leading-relaxed">
+              Self-Assessment trigger mapping and 5-minute low-stakes priming drills with 4-4-4-4 box breathing.
+            </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-3">
-            <div className="text-xs font-mono font-bold text-sky-400 uppercase tracking-wider">
-              Phase 2 · Execution
-            </div>
-            <h3 className="font-bold text-white text-base">On-Field Cold Outreach Engine</h3>
-            <ul className="text-xs text-gray-400 space-y-2 list-disc list-inside">
-              <li><strong className="text-gray-200">Progressive Challenge Roadmap:</strong> Level 1 (Direct Info), Level 2 (Observational), Level 3 (Pitching/Value).</li>
-              <li><strong className="text-gray-200">Live In-Person Coaching Loop:</strong> Real-time feedback immediately following an interaction.</li>
-            </ul>
+          <div className="p-5 rounded-2xl bg-black border border-neutral-900 space-y-2">
+            <span className="text-[10px] font-mono uppercase text-neutral-500 block">Phase 2 · Execution</span>
+            <h3 className="text-sm font-medium text-white">Cold Outreach Engine</h3>
+            <p className="text-xs text-neutral-400 leading-relaxed">
+              Progressive roadmap across Levels 1 (Direct Info), 2 (Observational), and 3 (Pitching/Value) with live coaching loop debriefs.
+            </p>
           </div>
 
-          <div className="p-5 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-3">
-            <div className="text-xs font-mono font-bold text-amber-400 uppercase tracking-wider">
-              Phase 3 · Retention &amp; Growth
-            </div>
-            <h3 className="font-bold text-white text-base">Post-Session Debrief &amp; Tracking</h3>
-            <ul className="text-xs text-gray-400 space-y-2 list-disc list-inside">
-              <li><strong className="text-gray-200">Feedback &amp; Progress Tracker:</strong> Structured voice-note reflections, interaction log, comfort score (1-10).</li>
-              <li><strong className="text-gray-200">KPI Performance Report:</strong> Field execution rate, anxiety reduction score, and NPS audit.</li>
-            </ul>
+          <div className="p-5 rounded-2xl bg-black border border-neutral-900 space-y-2">
+            <span className="text-[10px] font-mono uppercase text-neutral-500 block">Phase 3 · Retention &amp; Growth</span>
+            <h3 className="text-sm font-medium text-white">Debrief &amp; Tracking</h3>
+            <p className="text-xs text-neutral-400 leading-relaxed">
+              Structured voice-note reflections, interaction ledger, anxiety delta score, and NPS satisfaction report.
+            </p>
           </div>
         </div>
       </section>

@@ -1,18 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import { 
-  Mic, 
-  Square, 
-  Play, 
-  Pause, 
-  Trash2, 
-  Volume2, 
-  Sparkles, 
-  Tag, 
-  CheckCircle2,
-  AlertCircle
-} from 'lucide-react';
+import { Mic, Square, Trash2 } from 'lucide-react';
 import { VoiceReflection } from '@/types';
 
 interface VoiceNoteRecorderProps {
@@ -32,8 +21,6 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   const [reflectionType, setReflectionType] = useState<VoiceReflection['reflectionType']>('Post-Win Debrief');
   const [keyTakeaway, setKeyTakeaway] = useState<string>('');
   const [audioUrl, setAudioUrl] = useState<string | null>(null);
-  const [playingId, setPlayingId] = useState<string | null>(null);
-  const [micError, setMicError] = useState<string | null>(null);
 
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const audioChunksRef = useRef<Blob[]>([]);
@@ -46,7 +33,6 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   }, []);
 
   const startRecording = async () => {
-    setMicError(null);
     try {
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -74,12 +60,9 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
           setRecordingSeconds((prev) => prev + 1);
         }, 1000);
       } else {
-        // Fallback simulation mode
         simulateRecording();
       }
-    } catch (err: any) {
-      console.warn('Microphone permission not granted or unavailable, using simulation mode:', err);
-      setMicError('Microphone not detected or permission denied. Switched to voice note simulation mode.');
+    } catch {
       simulateRecording();
     }
   };
@@ -102,7 +85,6 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
     if (mediaRecorderRef.current && mediaRecorderRef.current.state !== 'inactive') {
       mediaRecorderRef.current.stop();
     } else {
-      // Mock audio blob
       setAudioUrl('simulated-recording');
     }
   };
@@ -120,12 +102,10 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
       audioBlobUrl: audioUrl || undefined,
       title: title || `${reflectionType} reflection`,
       reflectionType,
-      keyTakeaway: keyTakeaway || 'Felt genuine relief after verbalizing the interaction out loud.',
+      keyTakeaway: keyTakeaway || 'Action desensitizes anticipation anxiety.',
     };
 
     onAddReflection(newReflection);
-
-    // Reset form
     setTitle('');
     setKeyTakeaway('');
     setAudioUrl(null);
@@ -139,110 +119,89 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
   };
 
   return (
-    <div className="space-y-6">
-      <div className="p-6 rounded-3xl bg-gray-900/80 border border-gray-800 space-y-4">
+    <div className="space-y-8 max-w-4xl mx-auto pb-16">
+      {/* Header */}
+      <div className="space-y-1 border-b border-neutral-900 pb-5">
+        <span className="text-xs font-mono uppercase text-neutral-500">
+          Phase 3 · Audio Reflections
+        </span>
+        <h2 className="text-2xl font-medium tracking-tight text-white">
+          Voice-Note Reflections
+        </h2>
+        <p className="text-xs sm:text-sm text-neutral-400">
+          Record 30-90 second verbal debriefs between approaches to process emotional adrenaline.
+        </p>
+      </div>
+
+      {/* Minimalist Recorder Unit */}
+      <div className="p-6 rounded-2xl bg-black border border-neutral-900 space-y-5">
         <div className="flex items-center justify-between">
-          <div>
-            <div className="flex items-center space-x-2 text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-1">
-              <Volume2 className="w-4 h-4" />
-              <span>Structured Voice-Note Reflections</span>
-            </div>
-            <h3 className="text-lg font-bold text-white">
-              Field Audio Reflection Logger
-            </h3>
-            <p className="text-xs text-gray-400">
-              Record 30-90 second verbal debriefs between approaches to process emotional adrenaline and lock in learnings.
-            </p>
-          </div>
-
-          <span className="text-xs font-mono font-bold text-gray-400 px-3 py-1 rounded-full bg-gray-800">
-            {reflections.length} Audio Debriefs Logged
-          </span>
-        </div>
-
-        {micError && (
-          <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/20 text-xs text-amber-300 flex items-center space-x-2">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            <span>{micError}</span>
-          </div>
-        )}
-
-        {/* Live Audio Recorder Unit */}
-        <div className="p-5 rounded-2xl bg-gray-950/80 border border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-5">
-          {/* Recorder Controls */}
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             {!isRecording ? (
               <button
                 type="button"
                 onClick={startRecording}
-                className="w-14 h-14 rounded-2xl bg-rose-600 hover:bg-rose-500 text-white flex items-center justify-center shadow-lg shadow-rose-600/30 transition-all hover:scale-105"
+                className="w-10 h-10 rounded-full bg-white text-black hover:bg-neutral-200 transition-colors flex items-center justify-center"
+                title="Start recording"
               >
-                <Mic className="w-6 h-6" />
+                <Mic className="w-4 h-4" />
               </button>
             ) : (
               <button
                 type="button"
                 onClick={stopRecording}
-                className="w-14 h-14 rounded-2xl bg-gray-800 border-2 border-rose-500 text-rose-400 flex items-center justify-center shadow-lg shadow-rose-500/20 animate-pulse"
+                className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center animate-pulse"
+                title="Stop recording"
               >
-                <Square className="w-6 h-6 fill-current" />
+                <Square className="w-3.5 h-3.5 fill-current" />
               </button>
             )}
 
             <div>
-              <div className="text-sm font-bold text-white">
-                {isRecording ? 'Recording Voice Debrief...' : audioUrl ? 'Recording Ready to Save' : 'Tap Mic to Record'}
+              <div className="text-xs font-medium text-white">
+                {isRecording ? 'Recording Debrief' : audioUrl ? 'Recording Ready' : 'Tap to Record'}
               </div>
-              <div className="text-xs font-mono text-gray-400">
-                {isRecording ? (
-                  <span className="text-rose-400 font-bold flex items-center space-x-1">
-                    <span className="w-2 h-2 rounded-full bg-rose-500 animate-ping inline-block" />
-                    <span>{formatSecs(recordingSeconds)}</span>
-                  </span>
-                ) : (
-                  <span>Optimal: 30 - 60 seconds reflection</span>
-                )}
+              <div className="text-[11px] font-mono text-neutral-500">
+                {isRecording ? formatSecs(recordingSeconds) : '30-60s recommended'}
               </div>
             </div>
           </div>
 
-          {/* Animated Waveform Visualizer */}
-          <div className="flex items-center space-x-1.5 h-10 px-4 py-2 rounded-xl bg-gray-900 border border-gray-800">
-            <div className={`w-1 rounded-full bg-indigo-500 ${isRecording ? 'wave-bar-1' : 'h-2'}`} />
-            <div className={`w-1 rounded-full bg-indigo-400 ${isRecording ? 'wave-bar-2' : 'h-4'}`} />
-            <div className={`w-1 rounded-full bg-amber-400 ${isRecording ? 'wave-bar-3' : 'h-6'}`} />
-            <div className={`w-1 rounded-full bg-indigo-400 ${isRecording ? 'wave-bar-4' : 'h-3'}`} />
-            <div className={`w-1 rounded-full bg-indigo-500 ${isRecording ? 'wave-bar-5' : 'h-2'}`} />
-            <div className={`w-1 rounded-full bg-sky-400 ${isRecording ? 'wave-bar-2' : 'h-5'}`} />
-            <div className={`w-1 rounded-full bg-emerald-400 ${isRecording ? 'wave-bar-1' : 'h-2'}`} />
+          {/* Minimalist waveform indicator */}
+          <div className="flex items-center space-x-1 h-6 px-3 rounded-full bg-neutral-950 border border-neutral-900">
+            <div className={`w-0.5 rounded-full bg-neutral-400 ${isRecording ? 'wave-min-1' : 'h-1'}`} />
+            <div className={`w-0.5 rounded-full bg-neutral-400 ${isRecording ? 'wave-min-2' : 'h-2'}`} />
+            <div className={`w-0.5 rounded-full bg-white ${isRecording ? 'wave-min-3' : 'h-3'}`} />
+            <div className={`w-0.5 rounded-full bg-neutral-400 ${isRecording ? 'wave-min-4' : 'h-2'}`} />
+            <div className={`w-0.5 rounded-full bg-neutral-400 ${isRecording ? 'wave-min-5' : 'h-1'}`} />
           </div>
         </div>
 
-        {/* Audio Meta Form */}
+        {/* Save Form */}
         {(audioUrl || isRecording) && (
-          <form onSubmit={handleSaveReflection} className="p-4 rounded-2xl bg-gray-900 border border-gray-800 space-y-3">
+          <form onSubmit={handleSaveReflection} className="p-4 rounded-xl bg-neutral-950 border border-neutral-900 space-y-3 pt-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              <div>
-                <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">
-                  Reflection Title
+              <div className="space-y-1">
+                <label className="text-[10px] font-mono uppercase text-neutral-500 block">
+                  Title
                 </label>
                 <input
                   type="text"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  placeholder="e.g. Breakthrough at Express Avenue Atrium"
-                  className="w-full px-3 py-2 rounded-xl bg-gray-800 border border-gray-700 text-xs text-white focus:outline-none focus:border-indigo-500"
+                  placeholder="e.g. Approach #3 Breakthrough"
+                  className="w-full px-3 py-2 rounded-lg bg-black border border-neutral-850 text-xs text-white focus:outline-none focus:border-neutral-500"
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">
-                  Reflection Stage
+              <div className="space-y-1">
+                <label className="text-[10px] font-mono uppercase text-neutral-500 block">
+                  Stage
                 </label>
                 <select
                   value={reflectionType}
                   onChange={(e) => setReflectionType(e.target.value as any)}
-                  className="w-full px-3 py-2 rounded-xl bg-gray-800 border border-gray-700 text-xs text-white focus:outline-none focus:border-indigo-500"
+                  className="w-full px-3 py-2 rounded-lg bg-black border border-neutral-850 text-xs text-white focus:outline-none focus:border-neutral-500"
                 >
                   <option value="Pre-Approach Hesitation">Pre-Approach Hesitation</option>
                   <option value="Post-Win Debrief">Post-Win Debrief</option>
@@ -252,16 +211,16 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-gray-400 uppercase mb-1">
-                Key Breakthrough / Takeaway
+            <div className="space-y-1">
+              <label className="text-[10px] font-mono uppercase text-neutral-500 block">
+                Key Realization
               </label>
               <input
                 type="text"
                 value={keyTakeaway}
                 onChange={(e) => setKeyTakeaway(e.target.value)}
-                placeholder="What was the main cognitive realization?"
-                className="w-full px-3 py-2 rounded-xl bg-gray-800 border border-gray-700 text-xs text-white focus:outline-none focus:border-indigo-500"
+                placeholder="What did you learn from this interaction?"
+                className="w-full px-3 py-2 rounded-lg bg-black border border-neutral-850 text-xs text-white focus:outline-none focus:border-neutral-500"
               />
             </div>
 
@@ -272,64 +231,57 @@ export const VoiceNoteRecorder: React.FC<VoiceNoteRecorderProps> = ({
                   setAudioUrl(null);
                   setIsRecording(false);
                 }}
-                className="px-3 py-1.5 rounded-lg text-xs text-gray-400 hover:text-white"
+                className="px-3 py-1.5 text-xs text-neutral-500 hover:text-white"
               >
                 Discard
               </button>
               <button
                 type="submit"
                 disabled={isRecording}
-                className="px-5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-semibold text-xs transition-colors shadow-md shadow-indigo-600/20"
+                className="px-4 py-1.5 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-medium disabled:opacity-50"
               >
-                Save Voice Reflection
+                Save Note
               </button>
             </div>
           </form>
         )}
 
-        {/* Saved Audio Reflections List */}
-        <div className="space-y-3 pt-2">
+        {/* Logged Reflections */}
+        <div className="space-y-2 pt-2">
           {reflections.length === 0 ? (
-            <div className="text-center py-6 text-xs text-gray-500 border border-dashed border-gray-800 rounded-2xl">
-              No voice reflections logged yet. Record your thoughts immediately after an approach!
+            <div className="text-center py-8 text-xs font-mono text-neutral-600 border border-dashed border-neutral-900 rounded-xl">
+              No audio reflections recorded yet
             </div>
           ) : (
             reflections.map((ref) => (
               <div
                 key={ref.id}
-                className="p-4 rounded-2xl bg-gray-900/60 border border-gray-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 hover:border-gray-700 transition-colors"
+                className="p-3.5 rounded-xl bg-neutral-950 border border-neutral-900 flex items-center justify-between gap-3 text-xs"
               >
-                <div className="space-y-1">
+                <div className="space-y-0.5">
                   <div className="flex items-center space-x-2">
-                    <span className="text-xs font-bold text-white">{ref.title}</span>
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/10 text-indigo-300 font-semibold border border-indigo-500/20">
+                    <span className="font-medium text-white">{ref.title}</span>
+                    <span className="text-[10px] font-mono text-neutral-500 uppercase">
                       {ref.reflectionType}
                     </span>
-                    <span className="text-[11px] font-mono text-gray-500">
-                      {ref.timestamp} ({ref.durationFormatted})
+                    <span className="text-[10px] font-mono text-neutral-600">
+                      ({ref.durationFormatted})
                     </span>
                   </div>
-                  <p className="text-xs text-gray-400">
-                    <strong className="text-gray-300">Takeaway:</strong> {ref.keyTakeaway}
-                  </p>
+                  <p className="text-neutral-400 font-normal text-[11px]">{ref.keyTakeaway}</p>
                 </div>
 
                 <div className="flex items-center space-x-2 shrink-0">
                   {ref.audioBlobUrl && ref.audioBlobUrl !== 'simulated-recording' ? (
-                    <audio controls src={ref.audioBlobUrl} className="h-8 max-w-[200px]" />
+                    <audio controls src={ref.audioBlobUrl} className="h-7 max-w-[160px]" />
                   ) : (
-                    <div className="text-[11px] font-mono text-emerald-400 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center space-x-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" />
-                      <span>Audio Logged</span>
-                    </div>
+                    <span className="text-[10px] font-mono text-neutral-500">Audio Logged</span>
                   )}
-
                   <button
                     onClick={() => onDeleteReflection(ref.id)}
-                    title="Delete voice note"
-                    className="p-1.5 rounded-lg text-gray-500 hover:text-rose-400 hover:bg-gray-800 transition-colors"
+                    className="p-1 text-neutral-600 hover:text-white transition-colors"
                   >
-                    <Trash2 className="w-4 h-4" />
+                    <Trash2 className="w-3.5 h-3.5" />
                   </button>
                 </div>
               </div>

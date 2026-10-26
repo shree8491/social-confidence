@@ -1,7 +1,6 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import confetti from 'canvas-confetti';
 import { Navbar } from '@/components/Navbar';
 import { LandingHero } from '@/components/LandingHero';
 import { SelfAssessment } from '@/components/phase1/SelfAssessment';
@@ -34,7 +33,6 @@ export default function Home() {
     setSession(loaded);
   }, []);
 
-  // Sync to local storage
   const handleUpdateSession = (newSession: SessionData) => {
     setSession(newSession);
     saveStoredSession(newSession);
@@ -60,17 +58,6 @@ export default function Home() {
       approaches: updatedApproaches,
     };
     handleUpdateSession(newSession);
-
-    // Check if target execution rate (80%) just reached!
-    const target = session.targetApproachesCount || 10;
-    const rate = (updatedApproaches.length / target) * 100;
-    if (rate >= 80 && (updatedApproaches.length - 1) / target * 100 < 80) {
-      confetti({
-        particleCount: 80,
-        spread: 70,
-        origin: { y: 0.6 },
-      });
-    }
   };
 
   const handleDeleteApproach = (id: string) => {
@@ -102,7 +89,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#090d16] text-gray-100">
+    <div className="min-h-screen flex flex-col bg-black text-neutral-100 font-sans antialiased selection:bg-neutral-800 selection:text-white">
       <Navbar
         session={session}
         activeTab={activeTab}
@@ -110,8 +97,8 @@ export default function Home() {
         onUpdateSession={handleUpdateSession}
       />
 
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-        {/* VIEW 1: Overview & Commercials Landing */}
+      <main className="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 pt-6">
+        {/* VIEW 1: Overview */}
         {activeTab === 'landing' && (
           <LandingHero
             session={session}
@@ -123,30 +110,29 @@ export default function Home() {
           />
         )}
 
-        {/* VIEW 2: Phase 1 (Mindset & Priming) */}
+        {/* VIEW 2: Phase 1 */}
         {activeTab === 'phase1' && (
-          <div className="space-y-6 pb-16">
-            {/* Sub-tab pills */}
-            <div className="flex items-center space-x-2 border-b border-gray-800 pb-3">
+          <div className="space-y-6">
+            <div className="flex items-center space-x-1 p-1 rounded-full bg-neutral-950 border border-neutral-900 w-fit text-xs font-medium">
               <button
                 onClick={() => setPhase1Subtab('assessment')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1 rounded-full transition-colors ${
                   phase1Subtab === 'assessment'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-gray-400 hover:text-white bg-gray-900 border border-gray-800'
+                    ? 'bg-neutral-800 text-white'
+                    : 'text-neutral-400 hover:text-white'
                 }`}
               >
-                1. Self-Assessment Check
+                1. Self-Assessment
               </button>
               <button
                 onClick={() => setPhase1Subtab('priming')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1 rounded-full transition-colors ${
                   phase1Subtab === 'priming'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-gray-400 hover:text-white bg-gray-900 border border-gray-800'
+                    ? 'bg-neutral-800 text-white'
+                    : 'text-neutral-400 hover:text-white'
                 }`}
               >
-                2. 5-Min Priming Routine
+                2. 5-Min Priming
               </button>
             </div>
 
@@ -169,39 +155,38 @@ export default function Home() {
           </div>
         )}
 
-        {/* VIEW 3: Phase 2 (Cold Outreach Execution Engine) */}
+        {/* VIEW 3: Phase 2 */}
         {activeTab === 'phase2' && (
-          <div className="space-y-6 pb-16">
-            {/* Sub-tab pills */}
-            <div className="flex items-center justify-between border-b border-gray-800 pb-3">
-              <div className="flex items-center space-x-2">
+          <div className="space-y-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-1 p-1 rounded-full bg-neutral-950 border border-neutral-900 text-xs font-medium">
                 <button
                   onClick={() => setPhase2Subtab('roadmap')}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-3 py-1 rounded-full transition-colors ${
                     phase2Subtab === 'roadmap'
-                      ? 'bg-indigo-600 text-white shadow-md'
-                      : 'text-gray-400 hover:text-white bg-gray-900 border border-gray-800'
+                      ? 'bg-neutral-800 text-white'
+                      : 'text-neutral-400 hover:text-white'
                   }`}
                 >
-                  Progressive Challenge Roadmap
+                  Challenge Roadmap
                 </button>
                 <button
                   onClick={() => setPhase2Subtab('coach_loop')}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                  className={`px-3 py-1 rounded-full transition-colors ${
                     phase2Subtab === 'coach_loop'
-                      ? 'bg-indigo-600 text-white shadow-md'
-                      : 'text-gray-400 hover:text-white bg-gray-900 border border-gray-800'
+                      ? 'bg-neutral-800 text-white'
+                      : 'text-neutral-400 hover:text-white'
                   }`}
                 >
-                  Live In-Person Coaching Loop
+                  Live Coaching Loop
                 </button>
               </div>
 
               <button
                 onClick={() => handleOpenLogger(null, 1)}
-                className="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold shadow-md shadow-indigo-600/20"
+                className="px-3 py-1.5 rounded-full border border-neutral-800 hover:border-neutral-700 text-xs text-neutral-300 font-medium transition-colors"
               >
-                + Quick Log Approach
+                + Quick Log
               </button>
             </div>
 
@@ -220,40 +205,39 @@ export default function Home() {
           </div>
         )}
 
-        {/* VIEW 4: Phase 3 (Debrief, Voice Notes & Tracking) */}
+        {/* VIEW 4: Phase 3 */}
         {activeTab === 'phase3' && (
-          <div className="space-y-6 pb-16">
-            {/* Sub-tab pills */}
-            <div className="flex items-center space-x-2 border-b border-gray-800 pb-3">
+          <div className="space-y-6">
+            <div className="flex items-center space-x-1 p-1 rounded-full bg-neutral-950 border border-neutral-900 w-fit text-xs font-medium">
               <button
                 onClick={() => setPhase3Subtab('tracker')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1 rounded-full transition-colors ${
                   phase3Subtab === 'tracker'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-gray-400 hover:text-white bg-gray-900 border border-gray-800'
+                    ? 'bg-neutral-800 text-white'
+                    : 'text-neutral-400 hover:text-white'
                 }`}
               >
-                Interaction Ledger ({session.approaches.length})
+                Ledger ({session.approaches.length})
               </button>
               <button
                 onClick={() => setPhase3Subtab('audio')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1 rounded-full transition-colors ${
                   phase3Subtab === 'audio'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-gray-400 hover:text-white bg-gray-900 border border-gray-800'
+                    ? 'bg-neutral-800 text-white'
+                    : 'text-neutral-400 hover:text-white'
                 }`}
               >
-                Voice-Note Reflections ({session.voiceReflections.length})
+                Voice Notes ({session.voiceReflections.length})
               </button>
               <button
                 onClick={() => setPhase3Subtab('satisfaction')}
-                className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
+                className={`px-3 py-1 rounded-full transition-colors ${
                   phase3Subtab === 'satisfaction'
-                    ? 'bg-indigo-600 text-white shadow-md'
-                    : 'text-gray-400 hover:text-white bg-gray-900 border border-gray-800'
+                    ? 'bg-neutral-800 text-white'
+                    : 'text-neutral-400 hover:text-white'
                 }`}
               >
-                Comfort Delta &amp; NPS Audit
+                Delta &amp; NPS
               </button>
             </div>
 
@@ -283,13 +267,13 @@ export default function Home() {
           </div>
         )}
 
-        {/* VIEW 5: KPI Executive Summary & Verification Report */}
+        {/* VIEW 5: Summary */}
         {activeTab === 'summary' && (
           <SessionSummaryCard session={session} />
         )}
       </main>
 
-      {/* Approach Quick-Logger Modal */}
+      {/* Modal */}
       <ApproachLoggerModal
         isOpen={isLoggerOpen}
         challenge={activeChallengeForModal}
@@ -299,15 +283,11 @@ export default function Home() {
         onSaveApproach={handleSaveApproach}
       />
 
-      {/* Footer */}
-      <footer className="no-print mt-auto border-t border-gray-800/80 bg-gray-950/60 py-6 text-center text-xs text-gray-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <div>
-            <strong className="text-gray-300">Real-World Social Confidence &amp; Cold Outreach</strong> · Q4 2026 Spec
-          </div>
-          <div>
-            Built for Shree Sundar (GitHub: <span className="font-mono text-indigo-400">shree8491</span>) · Chennai Field Operations
-          </div>
+      {/* Minimal Footer */}
+      <footer className="no-print mt-auto border-t border-neutral-900 py-6 text-center text-xs text-neutral-500 font-mono">
+        <div className="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+          <div>Social Confidence &amp; Cold Outreach · PRD v1.1</div>
+          <div>Shree Sundar (shree8491) · Chennai Field Operations</div>
         </div>
       </footer>
     </div>

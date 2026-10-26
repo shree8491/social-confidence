@@ -1,16 +1,6 @@
 'use client';
 
 import React from 'react';
-import { 
-  ShieldCheck, 
-  Sparkles, 
-  AlertTriangle, 
-  CheckCircle2, 
-  Flame, 
-  MessageSquare,
-  Users,
-  Star
-} from 'lucide-react';
 import { SessionData } from '@/types';
 
 interface LiveCoachingLoopProps {
@@ -30,114 +20,89 @@ export const LiveCoachingLoop: React.FC<LiveCoachingLoopProps> = ({ session }) =
       : '5.0';
 
   return (
-    <div className="space-y-6 max-w-5xl mx-auto">
-      {/* Overview Card */}
-      <div className="p-6 rounded-3xl bg-gray-900/80 border border-indigo-500/20">
-        <div className="flex items-center space-x-2 text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-2">
-          <span>Phase 2: Execution Engine</span>
-          <span>·</span>
-          <span>Deliverable 2</span>
-        </div>
-        <h3 className="text-xl sm:text-2xl font-bold text-white mb-2">
+    <div className="space-y-8 max-w-4xl mx-auto pb-16">
+      {/* Header */}
+      <div className="space-y-1 border-b border-neutral-900 pb-5">
+        <span className="text-xs font-mono uppercase text-neutral-500">
+          Phase 2 · Deliverable 2
+        </span>
+        <h2 className="text-2xl font-medium tracking-tight text-white">
           Live In-Person Coaching Loop
-        </h3>
-        <p className="text-xs sm:text-sm text-gray-400">
-          Real-time physical &amp; psychological feedback delivered by the coach within 15 seconds of every public approach.
+        </h2>
+        <p className="text-xs sm:text-sm text-neutral-400">
+          Real-time physical and psychological feedback delivered by the coach immediately following an interaction.
         </p>
-
-        {/* Real-Time Telemetry Stats */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-6">
-          <div className="p-4 rounded-2xl bg-gray-800/60 border border-gray-700/60">
-            <span className="text-xs text-gray-400 block mb-1">
-              3-Second Rule Adherence
-            </span>
-            <div className="flex items-baseline space-x-2">
-              <span className="text-2xl sm:text-3xl font-black text-emerald-400 font-mono">
-                {adherenceRate}%
-              </span>
-              <span className="text-xs text-gray-400 font-medium">
-                ({total - hesitatedCount} of {total} prompt moves)
-              </span>
-            </div>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-gray-800/60 border border-gray-700/60">
-            <span className="text-xs text-gray-400 block mb-1">
-              Avg. Body Language Score
-            </span>
-            <div className="flex items-baseline space-x-2">
-              <span className="text-2xl sm:text-3xl font-black text-amber-400 font-mono">
-                {avgBodyLanguage}
-              </span>
-              <span className="text-xs text-gray-400 font-medium">/ 5.0 Stars</span>
-            </div>
-          </div>
-
-          <div className="p-4 rounded-2xl bg-gray-800/60 border border-gray-700/60">
-            <span className="text-xs text-gray-400 block mb-1">
-              Field Coach in Attendance
-            </span>
-            <div className="flex items-center space-x-2 mt-1">
-              <span className="text-base font-bold text-white">
-                {session.coachName || 'Shree Sundar'}
-              </span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-300 font-semibold">
-                Chennai Active
-              </span>
-            </div>
-          </div>
-        </div>
       </div>
 
-      {/* Immediate Field Debrief Cheat Sheet */}
-      <div className="space-y-4">
-        <div>
-          <h4 className="text-base font-bold text-white">
-            Instant Field Debrief Cues (Coach Diagnostic Matrix)
-          </h4>
-          <p className="text-xs text-gray-400">
-            Micro-corrections applied on the sidewalk or mall concourse immediately after an interaction:
+      {/* Telemetry Stats */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-neutral-900 rounded-2xl overflow-hidden border border-neutral-900">
+        <div className="bg-black p-5 space-y-1">
+          <span className="text-[10px] uppercase font-mono text-neutral-500 block">
+            3-Second Rule Adherence
+          </span>
+          <div className="text-3xl font-light text-white font-mono">{adherenceRate}%</div>
+          <p className="text-xs text-neutral-400 font-mono">
+            {total - hesitatedCount} of {total} prompt moves
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-2">
-            <div className="flex items-center space-x-2 text-rose-400 font-bold text-xs uppercase">
-              <AlertTriangle className="w-4 h-4" />
-              <span>Symptom: Hesitation Freeze (&gt;3 Seconds)</span>
-            </div>
-            <p className="text-xs text-gray-300">
-              <strong className="text-white">Coach Action:</strong> Do not analyze the hesitation. Count out loud &quot;3, 2, 1, Move&quot; and take the first two steps with them to transfer kinetic momentum.
+        <div className="bg-black p-5 space-y-1">
+          <span className="text-[10px] uppercase font-mono text-neutral-500 block">
+            Body Language Avg.
+          </span>
+          <div className="text-3xl font-light text-white font-mono">{avgBodyLanguage}</div>
+          <p className="text-xs text-neutral-400 font-mono">out of 5.0 rating</p>
+        </div>
+
+        <div className="bg-black p-5 space-y-1">
+          <span className="text-[10px] uppercase font-mono text-neutral-500 block">
+            Lead Field Coach
+          </span>
+          <div className="text-lg font-medium text-white">{session.coachName || 'Shree Sundar'}</div>
+          <p className="text-xs text-neutral-400">Chennai Field Session</p>
+        </div>
+      </div>
+
+      {/* Diagnostic Matrix */}
+      <div className="space-y-3">
+        <h3 className="text-sm font-medium text-white">
+          Field Diagnostic Micro-Corrections
+        </h3>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div className="p-4 rounded-xl bg-black border border-neutral-900 space-y-1.5">
+            <span className="text-xs font-mono uppercase text-neutral-400 block">
+              Hesitation (&gt;3 Seconds)
+            </span>
+            <p className="text-xs text-neutral-400 leading-relaxed">
+              <strong className="text-neutral-200">Coach Cue:</strong> Count 1-2-3 out loud and take the first two steps beside them to transfer kinetic momentum.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-2">
-            <div className="flex items-center space-x-2 text-amber-400 font-bold text-xs uppercase">
-              <Star className="w-4 h-4" />
-              <span>Symptom: Quiet / Breathy Vocal Delivery</span>
-            </div>
-            <p className="text-xs text-gray-300">
-              <strong className="text-white">Coach Action:</strong> Have the participant project their voice to the coach positioned 5 paces behind. Emphasize speaking from diaphragm, not throat.
+          <div className="p-4 rounded-xl bg-black border border-neutral-900 space-y-1.5">
+            <span className="text-xs font-mono uppercase text-neutral-400 block">
+              Quiet / Breathy Voice
+            </span>
+            <p className="text-xs text-neutral-400 leading-relaxed">
+              <strong className="text-neutral-200">Coach Cue:</strong> Have the participant project directly to the coach standing 5 meters away; speak from the diaphragm.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-2">
-            <div className="flex items-center space-x-2 text-sky-400 font-bold text-xs uppercase">
-              <MessageSquare className="w-4 h-4" />
-              <span>Symptom: Awkward Silence After Opener</span>
-            </div>
-            <p className="text-xs text-gray-300">
-              <strong className="text-white">Coach Action:</strong> Teach the &quot;Last-3-Words Echo&quot; or ask &quot;What brought you out to Chennai today?&quot; — lets the other person carry conversational weight.
+          <div className="p-4 rounded-xl bg-black border border-neutral-900 space-y-1.5">
+            <span className="text-xs font-mono uppercase text-neutral-400 block">
+              Awkward Silence
+            </span>
+            <p className="text-xs text-neutral-400 leading-relaxed">
+              <strong className="text-neutral-200">Coach Cue:</strong> Echo the last 3 words as a question, or ask &quot;What brought you out to Chennai today?&quot;.
             </p>
           </div>
 
-          <div className="p-4 rounded-2xl bg-gray-900/60 border border-gray-800 space-y-2">
-            <div className="flex items-center space-x-2 text-emerald-400 font-bold text-xs uppercase">
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Symptom: Rebuffed or Strangers In a Rush</span>
-            </div>
-            <p className="text-xs text-gray-300">
-              <strong className="text-white">Coach Action:</strong> Immediate high-five. Celebrate taking action regardless of response. Prove to the amygdala that nothing dangerous occurred.
+          <div className="p-4 rounded-xl bg-black border border-neutral-900 space-y-1.5">
+            <span className="text-xs font-mono uppercase text-neutral-400 block">
+              Rebuff / In a Rush
+            </span>
+            <p className="text-xs text-neutral-400 leading-relaxed">
+              <strong className="text-neutral-200">Coach Cue:</strong> Immediate smile, &quot;Have a great day!&quot;, and coach high-five to condition that no physical danger occurred.
             </p>
           </div>
         </div>

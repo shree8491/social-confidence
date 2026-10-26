@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ShieldAlert, CheckCircle2, MapPin, Target, Sparkles, User, HelpCircle } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import { SessionData, SelfAssessmentData } from '@/types';
 import { PROGRAM_COMMERCIALS } from '@/lib/constants';
 
@@ -18,7 +18,7 @@ const COMMON_TRIGGERS = [
   'Awkward silence / running out of things to say',
   'Intimidation by perceived status / attractive strangers',
   'Over-analyzing the exact perfect opener script',
-  'Voice becoming quiet, breathy, or trembling',
+  'Voice becoming quiet or breathy',
 ];
 
 export const SelfAssessment: React.FC<SelfAssessmentProps> = ({
@@ -61,118 +61,93 @@ export const SelfAssessment: React.FC<SelfAssessmentProps> = ({
     });
   };
 
-  const getScoreDescription = (score: number) => {
-    if (score >= 9) return 'Extreme Panic & Full Freeze: Flight response triggered immediately around strangers.';
-    if (score >= 7) return 'High Anxiety & Overthinking: Rapid pulse, takes minutes to build courage, high avoidance.';
-    if (score >= 5) return 'Moderate Discomfort: Can function when forced, but feels rigid and self-conscious.';
-    if (score >= 3) return 'Mild Hesitation: Slight butterfly feelings, warms up quickly after one interaction.';
-    return 'Calm & Grounded: Socially at ease, minor situational tension only.';
-  };
-
   return (
-    <div className="space-y-8 max-w-4xl mx-auto">
+    <div className="space-y-10 max-w-4xl mx-auto pb-16">
       {/* Header */}
-      <div className="border-b border-gray-800 pb-5">
-        <div className="flex items-center space-x-2 text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-1">
-          <span>Phase 1: Mindset &amp; Foundations</span>
-          <span>·</span>
-          <span>Deliverable 1</span>
-        </div>
-        <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+      <div className="space-y-1 border-b border-neutral-900 pb-5">
+        <span className="text-xs font-mono uppercase text-neutral-500">
+          Phase 1 · Deliverable 1
+        </span>
+        <h2 className="text-2xl font-medium tracking-tight text-white">
           Self-Assessment Check
         </h2>
-        <p className="text-sm text-gray-400 mt-1">
-          Initial mapping of anxiety triggers, past comfort zones, and specific goals before taking the field in Chennai.
+        <p className="text-xs sm:text-sm text-neutral-400">
+          Initial mapping of anxiety triggers, past comfort zones, and specific goals before stepping into Chennai&apos;s public spaces.
         </p>
       </div>
 
       {/* Session Metadata Controls */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 rounded-2xl bg-gray-900/60 border border-gray-800">
-        <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase mb-1.5">
-            Participant Name
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 rounded-2xl bg-black border border-neutral-900">
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-mono uppercase text-neutral-500 block">
+            Participant
           </label>
-          <div className="relative">
-            <User className="w-4 h-4 text-gray-500 absolute left-3 top-3" />
-            <input
-              type="text"
-              value={participantName}
-              onChange={(e) => setParticipantName(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-gray-800 border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500"
-            />
-          </div>
+          <input
+            type="text"
+            value={participantName}
+            onChange={(e) => setParticipantName(e.target.value)}
+            className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-neutral-500"
+          />
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase mb-1.5">
-            Coach Name
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-mono uppercase text-neutral-500 block">
+            Head Coach
           </label>
-          <div className="relative">
-            <Sparkles className="w-4 h-4 text-amber-400 absolute left-3 top-3" />
-            <input
-              type="text"
-              value={coachName}
-              onChange={(e) => setCoachName(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-gray-800 border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500"
-            />
-          </div>
+          <input
+            type="text"
+            value={coachName}
+            onChange={(e) => setCoachName(e.target.value)}
+            className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-neutral-500"
+          />
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase mb-1.5">
-            Chennai Field Hub
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-mono uppercase text-neutral-500 block">
+            Field Hub
           </label>
-          <div className="relative">
-            <MapPin className="w-4 h-4 text-sky-400 absolute left-3 top-3" />
-            <select
-              value={locationHub}
-              onChange={(e) => setLocationHub(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-gray-800 border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500"
-            >
-              {PROGRAM_COMMERCIALS.hotspots.map((h) => (
-                <option key={h.name} value={h.name}>
-                  {h.name}
-                </option>
-              ))}
-            </select>
-          </div>
+          <select
+            value={locationHub}
+            onChange={(e) => setLocationHub(e.target.value)}
+            className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-neutral-500"
+          >
+            {PROGRAM_COMMERCIALS.hotspots.map((h) => (
+              <option key={h.name} value={h.name}>
+                {h.name}
+              </option>
+            ))}
+          </select>
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold text-gray-400 uppercase mb-1.5">
-            Target Approaches Count
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-mono uppercase text-neutral-500 block">
+            Planned Approaches
           </label>
-          <div className="relative">
-            <Target className="w-4 h-4 text-emerald-400 absolute left-3 top-3" />
-            <select
-              value={targetCount}
-              onChange={(e) => setTargetCount(Number(e.target.value))}
-              className="w-full pl-9 pr-3 py-2 rounded-xl bg-gray-800 border border-gray-700 text-white text-xs sm:text-sm focus:outline-none focus:border-indigo-500"
-            >
-              <option value={8}>8 Approaches (Starter)</option>
-              <option value={10}>10 Approaches (Standard 5-Hr)</option>
-              <option value={12}>12 Approaches (Advanced)</option>
-              <option value={15}>15 Approaches (High Intensity)</option>
-            </select>
-          </div>
+          <select
+            value={targetCount}
+            onChange={(e) => setTargetCount(Number(e.target.value))}
+            className="w-full px-3 py-2 rounded-lg bg-neutral-950 border border-neutral-800 text-white text-xs focus:outline-none focus:border-neutral-500"
+          >
+            <option value={8}>8 Approaches (Starter)</option>
+            <option value={10}>10 Approaches (Standard 5-Hr)</option>
+            <option value={12}>12 Approaches (Advanced)</option>
+          </select>
         </div>
       </div>
 
       {/* Baseline Anxiety Rating Slider */}
-      <div className="p-6 rounded-2xl bg-gray-900/80 border border-gray-800 space-y-4">
+      <div className="p-6 rounded-2xl bg-black border border-neutral-900 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="text-base font-bold text-white flex items-center space-x-2">
-              <ShieldAlert className="w-5 h-5 text-amber-400" />
-              <span>Initial Baseline Anxiety Rating (1 - 10)</span>
+            <h3 className="text-sm font-medium text-white">
+              Baseline Anxiety Rating
             </h3>
-            <p className="text-xs text-gray-400">
-              Rate your current fear level before stepping out into the public hub.
+            <p className="text-xs text-neutral-500">
+              Self-reported fear level before approaching strangers (1-10 scale)
             </p>
           </div>
-          <div className="text-3xl font-black text-amber-400 px-4 py-1.5 rounded-xl bg-amber-500/10 border border-amber-500/20 font-mono">
-            {data.baselineAnxietyScore}
-            <span className="text-xs text-gray-400 font-sans">/10</span>
+          <div className="font-mono text-2xl font-medium text-white">
+            {data.baselineAnxietyScore}<span className="text-xs text-neutral-500">/10</span>
           </div>
         </div>
 
@@ -184,100 +159,86 @@ export const SelfAssessment: React.FC<SelfAssessmentProps> = ({
           onChange={(e) =>
             setData({ ...data, baselineAnxietyScore: Number(e.target.value) })
           }
-          className="w-full accent-amber-500 cursor-pointer h-2 bg-gray-700 rounded-lg"
+          className="w-full accent-white cursor-pointer h-1 bg-neutral-800 rounded-lg appearance-none"
         />
 
-        <div className="flex justify-between text-[11px] text-gray-500 font-medium">
-          <span>1: Completely Calm</span>
-          <span>5: Moderate Tension</span>
-          <span>10: Severe Panic Freeze</span>
-        </div>
-
-        <div className="p-3.5 rounded-xl bg-gray-800/70 border border-gray-700/60 text-xs text-gray-300">
-          <strong className="text-amber-300">Current State:</strong> {getScoreDescription(data.baselineAnxietyScore)}
+        <div className="flex justify-between text-[10px] font-mono text-neutral-500">
+          <span>1: Calm</span>
+          <span>5: Moderate Discomfort</span>
+          <span>10: Full Freeze</span>
         </div>
       </div>
 
       {/* Anxiety Triggers Mapping */}
       <div className="space-y-3">
         <div>
-          <h3 className="text-base font-bold text-white">Anxiety Triggers Mapping</h3>
-          <p className="text-xs text-gray-400">
-            Select the exact physical &amp; psychological triggers you experience in spontaneous public situations:
+          <h3 className="text-sm font-medium text-white">Anxiety Triggers Mapping</h3>
+          <p className="text-xs text-neutral-500">
+            Select triggers experienced during spontaneous public encounters:
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
           {COMMON_TRIGGERS.map((trigger) => {
             const active = data.triggers.includes(trigger);
             return (
-              <div
+              <button
+                type="button"
                 key={trigger}
                 onClick={() => toggleTrigger(trigger)}
-                className={`cursor-pointer p-3.5 rounded-xl text-xs font-medium border transition-all flex items-center space-x-3 ${
+                className={`text-left p-3 rounded-xl text-xs font-normal border transition-colors flex items-center justify-between ${
                   active
-                    ? 'bg-rose-950/40 border-rose-500/80 text-rose-200'
-                    : 'bg-gray-900/60 border-gray-800 text-gray-400 hover:text-gray-200 hover:border-gray-700'
+                    ? 'bg-neutral-900 border-neutral-400 text-white'
+                    : 'bg-black border-neutral-850 text-neutral-400 hover:border-neutral-700'
                 }`}
               >
-                <div
-                  className={`w-4 h-4 rounded-md flex items-center justify-center shrink-0 border ${
-                    active ? 'bg-rose-600 border-rose-500 text-white' : 'border-gray-600'
-                  }`}
-                >
-                  {active && '✓'}
-                </div>
                 <span>{trigger}</span>
-              </div>
+                {active && <Check className="w-3.5 h-3.5 shrink-0 text-white" />}
+              </button>
             );
           })}
         </div>
       </div>
 
-      {/* Comfort Zone Notes & Specific Session Goals */}
+      {/* Text Notes */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-            Current Comfort Zone &amp; Behavioral Habits
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-mono uppercase text-neutral-500 block">
+            Current Comfort Zone Habits
           </label>
           <textarea
             rows={3}
             value={data.comfortZoneNotes}
             onChange={(e) => setData({ ...data, comfortZoneNotes: e.target.value })}
-            placeholder="e.g. Usually wears AirPods, looks down at phone when someone passes by..."
-            className="w-full p-3 rounded-xl bg-gray-900 border border-gray-800 text-xs sm:text-sm text-gray-200 focus:outline-none focus:border-indigo-500 resize-none"
+            placeholder="e.g. Looks at phone to avoid eye contact, avoids standing alone..."
+            className="w-full p-3 rounded-xl bg-neutral-950 border border-neutral-850 text-xs text-neutral-200 focus:outline-none focus:border-neutral-500 resize-none font-normal"
           />
         </div>
 
-        <div>
-          <label className="block text-xs font-semibold text-gray-300 mb-1.5">
-            Specific Goals for this 5-Hour Session
+        <div className="space-y-1.5">
+          <label className="text-[10px] font-mono uppercase text-neutral-500 block">
+            Session Target Goals
           </label>
           <textarea
             rows={3}
             value={data.sessionGoals}
             onChange={(e) => setData({ ...data, sessionGoals: e.target.value })}
-            placeholder="e.g. Execute 10 approaches without hesitating >3 seconds, talk to 2 people for >2 mins..."
-            className="w-full p-3 rounded-xl bg-gray-900 border border-gray-800 text-xs sm:text-sm text-gray-200 focus:outline-none focus:border-indigo-500 resize-none"
+            placeholder="e.g. Complete 10 approaches without hesitating >3s, hold eye contact..."
+            className="w-full p-3 rounded-xl bg-neutral-950 border border-neutral-850 text-xs text-neutral-200 focus:outline-none focus:border-neutral-500 resize-none font-normal"
           />
         </div>
       </div>
 
-      {/* Action Footer */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-gray-800">
-        <div className="text-xs text-gray-400">
-          {saved && (
-            <span className="flex items-center space-x-1.5 text-emerald-400 font-medium">
-              <CheckCircle2 className="w-4 h-4" />
-              <span>Baseline locked ({new Date(data.completedAt || '').toLocaleTimeString()})</span>
-            </span>
-          )}
+      {/* Footer */}
+      <div className="flex items-center justify-between pt-4 border-t border-neutral-900">
+        <div className="text-xs font-mono text-neutral-500">
+          {saved && <span>✓ Baseline locked</span>}
         </div>
 
-        <div className="flex items-center space-x-3 w-full sm:w-auto">
+        <div className="flex items-center space-x-2">
           <button
             onClick={handleSave}
-            className="flex-1 sm:flex-none px-5 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-200 text-xs font-semibold border border-gray-700 transition-colors"
+            className="px-4 py-2 rounded-full border border-neutral-800 hover:border-neutral-700 text-xs text-neutral-300 font-medium transition-colors"
           >
             Save Baseline
           </button>
@@ -286,9 +247,10 @@ export const SelfAssessment: React.FC<SelfAssessmentProps> = ({
               handleSave();
               onProceedToPriming();
             }}
-            className="flex-1 sm:flex-none px-6 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold shadow-lg shadow-indigo-600/20 transition-all hover:scale-[1.02]"
+            className="px-5 py-2 rounded-full bg-white text-black hover:bg-neutral-200 text-xs font-medium transition-colors inline-flex items-center space-x-1.5"
           >
-            Proceed to 5-Min Priming Drills →
+            <span>Proceed to Priming</span>
+            <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
